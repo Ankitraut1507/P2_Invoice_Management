@@ -28,39 +28,43 @@ InvoiceOS is a high-performance, full-stack financial invoicing system designed 
 
 ---
 
-## 📂 Project Structure
-
----
-
 ## 📂 Project Structure & File Trace
 
-### **Backend (`/backend/P2_Invoice_Management`)**
+```text
+root/
+├── backend/P2_Invoice_Management/
+│   ├── Controllers/             # REST API Endpoints (Invoice, User)
+│   ├── Data/                     # EF Core Context & Migrations
+│   ├── Models/                   # Domain Entities & DTOs
+│   ├── Services/
+│   │   ├── Commands/             # Write Logic (Cache-aware)
+│   │   ├── Queries/              # Read Logic (Cache-aware)
+│   │   └── FallbackCacheService.cs # Redis/Memory Hybrid logic
+│   └── Program.cs                # Entry point & DI Configuration
+└── frontend/invoice-management-ui/
+    ├── src/
+    │   ├── api/                  # Axios Clients & Interceptors
+    │   ├── context/              # Auth & JWT Management
+    │   ├── pages/                # All Dashboard/Analytics UI
+    │   ├── index.css             # Design System & Dark Mode
+    │   └── App.jsx               # Routing & Global Layout
+    └── vite.config.js            # Build Configuration
+```
+
+### **Backend File Trace (`/backend`)**
 - **`Program.cs`**: The application heart. Configures Dependency Injection (DI), Authentication (JWT), CORS, and the Caching pipeline.
-- **`appsettings.json`**: Environment-specific settings including SQL Server connection strings and Redis endpoints.
 - **`Data/AppDbContext.cs`**: Entity Framework setup; maps C# models (Invoice, Payment, User) to SQL Server tables.
-- **`Controllers/`**: 
-    - `InvoiceController.cs`: Handles all API requests for invoices, analytics, and summary data.
-    - `UserController.cs`: Manages login, registration, and JWT token issuance.
-- **`Services/`**:
-    - `Queries/CachedInvoiceQueryService.cs`: Implements "Read" logic. It checks Redis/Memory cache before hitting the database.
-    - `Commands/CachedInvoiceCommandService.cs`: Implements "Write" logic. It updates the database and **invalidates** affected cache keys.
-    - `FallbackCacheService.cs`: Implements the "Circuit Breaker" pattern for Redis vs. Memory Cache.
-    - `AuthService.cs`: Encapsulates password hashing and JWT generation logic.
-- **`Models/`**: Defines the data shape for `Invoice`, `InvoiceLineItem`, `Payment`, and `User`.
+- **`Controllers/InvoiceController.cs`**: Handles all API requests for invoices, analytics, and summary data.
+- **`Services/Queries/CachedInvoiceQueryService.cs`**: Implements "Read" logic. It checks Redis/Memory cache before hitting the database.
+- **`Services/Commands/CachedInvoiceCommandService.cs`**: Implements "Write" logic. It updates the database and **invalidates** affected cache keys.
+- **`Services/FallbackCacheService.cs`**: Implements the "Circuit Breaker" pattern for Redis vs. Memory Cache.
 
-### **Frontend (`/frontend/invoice-management-ui`)**
-- **`src/main.jsx`**: The entry point. Initializes React and injects the global context providers.
+### **Frontend File Trace (`/frontend`)**
 - **`src/App.jsx`**: Defines the application skeleton, sidebar layout, and all route-guards (RBAC).
-- **`src/index.css`**: The core design system; contains all theme tokens (dark mode), animations, and responsive utilities.
 - **`src/context/AuthContext.jsx`**: Manages the global login state. Decodes JWTs synchronously to prevent "flashing" or navigation race conditions.
-- **`src/api/`**:
-    - `apiClient.js`: Axios configuration with request interceptors to automatically attach Bearer tokens.
-    - `invoiceApi.js`: A centralized hub for all API calls (Invoices, Payments, Analytics, Summary).
-- **`src/pages/Invoices/`**:
-    - `DashboardPage.jsx`: The main hub. Uses the "Summary API" for high-performance stat rendering.
-    - `CreateInvoicePage.jsx`: A complex form handler for creating invoices with dynamic, real-time total calculations.
-- **`src/pages/Analytics/`**: Dedicated dashboard pages for Aging reports and Revenue tracking.
-
+- **`src/api/invoiceApi.js`**: A centralized hub for all API calls (Invoices, Payments, Analytics, Summary).
+- **`src/pages/Invoices/DashboardPage.jsx`**: The main hub. Uses the "Summary API" for high-performance stat rendering.
+- **`src/index.css`**: The core design system; contains all theme tokens (dark mode), animations, and responsive utilities.
 
 ---
 
