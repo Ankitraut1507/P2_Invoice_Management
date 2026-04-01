@@ -8,6 +8,7 @@ export const invoiceApi = {
   update: (id, data) => apiClient.put(`/api/invoices/${id}`, data).then(r => r.data),
   delete: (id) => apiClient.delete(`/api/invoices/${id}`).then(r => r.data),
   changeStatus: (id, status) => apiClient.patch(`/api/invoices/${id}/status`, { status }).then(r => r.data),
+  getSummary: () => apiClient.get('/api/invoices/summary').then(r => r.data),
 
   // Line Items
   getItems: (invoiceId) => apiClient.get(`/api/invoices/${invoiceId}/items`).then(r => r.data),

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { invoiceApi } from '../../api/invoiceApi';
 import StatusBadge from '../../components/Shared/StatusBadge';
@@ -11,17 +11,24 @@ const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-IN', { day: '2-dig
 export default function DashboardPage() {
   const { user, hasRole } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [invoices, setInvoices] = useState([]);
+  const [summary, setSummary] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
+      setLoading(true);
       try {
-        const [invData] = await Promise.all([
+        // Fetch only 5 recent invoices and the summary stats
+        const [recentData, summaryData] = await Promise.all([
           invoiceApi.getAll({ page: 1, pageSize: 5 }),
+          invoiceApi.getSummary(),
         ]);
-        setInvoices(invData.items || invData || []);
+        
+        setInvoices(recentData.items || recentData || []);
+        setSummary(summaryData || []);
 
         if (hasRole('FinanceManager', 'Admin')) {
           const [aging, revenue] = await Promise.all([
@@ -37,13 +44,17 @@ export default function DashboardPage() {
       }
     };
     load();
-  }, []);
+  }, [location.key]);
 
   if (loading) return <LoadingSpinner message="Loading dashboard..." />;
 
-  const overdue = invoices.filter(i => i.status === 'Overdue').length;
-  const totalOutstanding = invoices.reduce((sum, i) => sum + (i.outstandingBalance || 0), 0);
-  const paid = invoices.filter(i => i.status === 'Paid').length;
+  // Calculate stats from the summary object instead of 1000 full records
+  const totalInvoices = summary.reduce((sum, s) => sum + (s.count || 0), 0);
+  const overdueCount = summary.find(s => s.status === 'Overdue')?.count || 0;
+  const paidCount = summary.find(s => s.status === 'Paid')?.count || 0;
+  const totalOutstanding = summary.reduce((sum, s) => sum + (s.outstandingBalance || 0), 0);
+
+
 
   return (
     <>
@@ -64,7 +75,7 @@ export default function DashboardPage() {
         <div className="stat-grid">
           <div className="stat-card">
             <div className="stat-label">Total Invoices</div>
-            <div className="stat-value">{invoices.length}</div>
+            <div className="stat-value">{totalInvoices}</div>
             <div className="stat-sub">This period</div>
           </div>
           <div className="stat-card">
@@ -74,12 +85,12 @@ export default function DashboardPage() {
           </div>
           <div className="stat-card">
             <div className="stat-label">Overdue</div>
-            <div className="stat-value" style={{ color: overdue > 0 ? 'var(--status-overdue)' : 'var(--status-paid)' }}>{overdue}</div>
+            <div className="stat-value" style={{ color: overdueCount > 0 ? 'var(--status-overdue)' : 'var(--status-paid)' }}>{overdueCount}</div>
             <div className="stat-sub">Requires action</div>
           </div>
           <div className="stat-card">
             <div className="stat-label">Paid</div>
-            <div className="stat-value success">{paid}</div>
+            <div className="stat-value success">{paidCount}</div>
             <div className="stat-sub">Completed invoices</div>
           </div>
         </div>

@@ -98,7 +98,10 @@ export function AuthProvider({ children }) {
       // Validate token format
       try {
         const payload = decodeToken(storedToken);
-        if (!payload || !payload.role) {
+        const hasRole =
+          payload?.role ||
+          payload?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        if (!payload || !hasRole) {
           localStorage.removeItem('invoice_token');
           return null;
         }
@@ -149,15 +152,40 @@ export function AuthProvider({ children }) {
       userId: idClaim,
       email: payload.email,
       role: roleClaim,
-      name: payload.name || payload.email || 'User',
+      name: payload.name || payload.email || payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] || 'User',
     });
     setLoading(false);
   }, [token]);
 
   const login = async (email, password) => {
     const data = await authApi.login(email, password);
-    localStorage.setItem('invoice_token', data.token);
-    setToken(data.token);
+    const tok = data.token;
+    localStorage.setItem('invoice_token', tok);
+
+    // Decode and set user synchronously so ProtectedRoute sees the user
+    // immediately when navigate() fires — before useEffect can run.
+    const payload = decodeToken(tok);
+    if (payload) {
+      const roleClaim =
+        payload.role ||
+        payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      const idClaim =
+        payload.userId ||
+        payload.sub ||
+        payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+      setUser({
+        userId: idClaim,
+        email: payload.email,
+        role: roleClaim,
+        name:
+          payload.name ||
+          payload.email ||
+          payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ||
+          'User',
+      });
+    }
+
+    setToken(tok);
     return data;
   };
 
