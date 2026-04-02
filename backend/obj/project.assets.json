@@ -2037,6 +2037,18 @@
             "related": ".xml"
           }
         }
+      },
+      "xunit.runner.visualstudio/3.1.5": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/_._": {}
+        },
+        "runtime": {
+          "lib/net8.0/_._": {}
+        },
+        "build": {
+          "build/net8.0/xunit.runner.visualstudio.props": {}
+        }
       }
     }
   },
@@ -5309,6 +5321,27 @@
         "xunit.extensibility.execution.2.9.3.nupkg.sha512",
         "xunit.extensibility.execution.nuspec"
       ]
+    },
+    "xunit.runner.visualstudio/3.1.5": {
+      "sha512": "tKi7dSTwP4m5m9eXPM2Ime4Kn7xNf4x4zT9sdLO/G4hZVnQCRiMTWoSZqI/pYTVeI27oPPqHBKYI/DjJ9GsYgA==",
+      "type": "package",
+      "path": "xunit.runner.visualstudio/3.1.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "_content/README.md",
+        "_content/logo-128-transparent.png",
+        "build/net472/xunit.abstractions.dll",
+        "build/net472/xunit.runner.visualstudio.props",
+        "build/net472/xunit.runner.visualstudio.testadapter.dll",
+        "build/net8.0/xunit.abstractions.dll",
+        "build/net8.0/xunit.runner.visualstudio.props",
+        "build/net8.0/xunit.runner.visualstudio.testadapter.dll",
+        "lib/net472/_._",
+        "lib/net8.0/_._",
+        "xunit.runner.visualstudio.3.1.5.nupkg.sha512",
+        "xunit.runner.visualstudio.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -5322,27 +5355,44 @@
       "Microsoft.NET.Test.Sdk >= 18.3.0",
       "Moq >= 4.20.72",
       "Swashbuckle.AspNetCore >= 6.6.2",
-      "xunit >= 2.9.3"
+      "xunit >= 2.9.3",
+      "xunit.runner.visualstudio >= 3.1.5"
     ]
   },
   "packageFolders": {
+<<<<<<< Updated upstream:backend/obj/project.assets.json
     "C:\\Users\\AnkitRaut\\.nuget\\packages\\": {},
+=======
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+>>>>>>> Stashed changes:backend/P2_Invoice_Management/obj/project.assets.json
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< Updated upstream:backend/obj/project.assets.json
       "projectUniqueName": "C:\\Users\\AnkitRaut\\Myfiles\\P2_InvoicementManagemt\\backend\\InvoiceManagement.csproj",
       "projectName": "InvoiceManagement",
       "projectPath": "C:\\Users\\AnkitRaut\\Myfiles\\P2_InvoicementManagemt\\backend\\InvoiceManagement.csproj",
       "packagesPath": "C:\\Users\\AnkitRaut\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\AnkitRaut\\Myfiles\\P2_InvoicementManagemt\\backend\\obj\\",
+=======
+      "projectUniqueName": "E:\\github\\P2_Invoice_Management\\backend\\P2_Invoice_Management\\InvoiceManagement.csproj",
+      "projectName": "InvoiceManagement",
+      "projectPath": "E:\\github\\P2_Invoice_Management\\backend\\P2_Invoice_Management\\InvoiceManagement.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "E:\\github\\P2_Invoice_Management\\backend\\P2_Invoice_Management\\obj\\",
+>>>>>>> Stashed changes:backend/P2_Invoice_Management/obj/project.assets.json
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< Updated upstream:backend/obj/project.assets.json
         "C:\\Users\\AnkitRaut\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> Stashed changes:backend/P2_Invoice_Management/obj/project.assets.json
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5368,7 +5418,12 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
+<<<<<<< Updated upstream:backend/obj/project.assets.json
       }
+=======
+      },
+      "SdkAnalysisLevel": "10.0.100"
+>>>>>>> Stashed changes:backend/P2_Invoice_Management/obj/project.assets.json
     },
     "frameworks": {
       "net8.0": {
@@ -5415,6 +5470,12 @@
           "xunit": {
             "target": "Package",
             "version": "[2.9.3, )"
+          },
+          "xunit.runner.visualstudio": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[3.1.5, )"
           }
         },
         "imports": [
@@ -5436,7 +5497,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< Updated upstream:backend/obj/project.assets.json
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.417/PortableRuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
+>>>>>>> Stashed changes:backend/P2_Invoice_Management/obj/project.assets.json
       }
     }
   }
