@@ -57,31 +57,33 @@ It enables businesses to manage invoices, payments, analytics, and users efficie
 ---
 
 ## 📁 Project Structure
+<<<<<<< HEAD
+
+```
 P2_Invoice_Management/
-│
 ├── backend/
-│ ├── Controllers/ # API endpoints
-│ ├── Models/ # Domain models
-│ ├── Dtos/ # Data transfer objects
-│ ├── Services/
-│ │ ├── Commands/ # Write operations (CQRS)
-│ │ ├── Queries/ # Read operations (CQRS)
-│ │ └── Cache Services # Redis + fallback logic
-│ ├── Data/ # DbContext & migrations
-│ └── Program.cs # App entry point
+│   ├── Controllers/        # API endpoints
+│   ├── Models/             # Domain models
+│   ├── Dtos/               # Data transfer objects
+│   ├── Services/
+│   │   ├── Commands/       # Write operations (CQRS)
+│   │   ├── Queries/        # Read operations (CQRS)
+│   │   └── Cache Services  # Redis + fallback logic
+│   ├── Data/               # DbContext & migrations
+│   └── Program.cs          # App entry point
 │
 ├── frontend/
-│ ├── src/
-│ │ ├── api/ # API layer
-│ │ ├── components/ # UI components
-│ │ ├── context/ # Auth context
-│ │ ├── pages/ # Application pages
-│ │ └── tests/ # Frontend tests
-│ └── vite.config.js
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   └── tests/
+│   └── vite.config.js
 │
 ├── docker-compose.yml
 └── README.md
-
+```
 
 ---
 
